@@ -1,13 +1,20 @@
-function ListGroup() {
-  let capitals = ["Sofia", "Paris", "Madrid", "Rome", "Berlin", "London"];
+import { useState } from "react";
+
+interface Props {
+  items: string[]
+  heading: string
+  onSelectItem: (item: string) => void
+}
+function ListGroup({items, heading, onSelectItem }: Props,) {
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   return (
     <>
-      <h1>List</h1>
-      { capitals.length === 0 && <p>No capitals</p> }
+      <h1>{heading}</h1>
+      { items.length === 0 && <p>No capitals</p> }
       <ul className="list-group">
-        {capitals.map((capital, index) => (
-          <li className="list-group-item" key={index}>
+        {items.map((capital, index) => (
+          <li onClick={()=>{setSelectedIndex(index), onSelectItem(capital)}} className={selectedIndex === index ? 'list-group-item active' : 'list-group-item'} key={index}>
             {capital}
           </li>
         ))}
